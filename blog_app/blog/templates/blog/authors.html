@@ -1,0 +1,11 @@
+{% extends 'main.html' %}
+{% block content %}
+<h2>Our authors:</h2>
+
+        {% for author in object_list %}
+            <a href="{% url 'entry-author' author.id%}">
+                <div class="authorList">{{ author }}</div>
+            </a>
+        {% endfor %}
+
+{% endblock content %}

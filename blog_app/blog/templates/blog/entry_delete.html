@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<h1>Confirm removing post:</h1>
+<div class="blogpost">
+  <h2>{{entry.title}}</h2>
+  {{ entry.content|linebreaksbr|slice:"0:100" }}
+</div>
+<form method="post" action="">
+  {% csrf_token %}
+  {{form.as_p}}
+  <button type="submit">delete</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NotBlog</title>
+    <link rel="stylesheet" href="/static/blog.css">
+</head>
+<body>
+<div class="mainContainer">
+    {% include 'head.html' %}
+    <div class="contentContainer">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+</div>
+</body>
+</html>

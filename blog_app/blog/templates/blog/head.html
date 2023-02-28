@@ -1,0 +1,27 @@
+<div class="topbar">
+    <div><a href="{% url 'home' %}" class="homelink"><h1>Blog app</h1></a></div>
+    {% if user.is_authenticated %}
+
+
+    <div aling="right">
+        <b>{{user.username}}</b> (<a href="{% url 'logout' %}">logout</a>)
+    </div>
+
+    {% else %}
+    <div>
+        <a href="{% url 'login' %}">Login</a>
+        or
+        <a href="{% url 'register' %}">Register</a>
+    </div>
+    {% endif %}
+
+</div>
+
+<div class="navbar">
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'authors' %}">Browse Authors</a>
+    {% if user.is_authenticated %}
+    <a href="{% url 'entry-owned' %}">My posts</a>
+    <a href="{% url 'entry-create' %}">Add blog post</a>
+    {% endif %}
+</div>

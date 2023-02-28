@@ -1,0 +1,11 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div align="center">
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        {{ form.as_div }}
+        <button type="submit">Register</button>
+    </form>
+</div>
+{% endblock content %}

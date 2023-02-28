@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+{% block content %}
+
+        {% for entry in object_list %}
+            <div class="blogpost">
+                <div align="right">{{ entry.author }}, {{ entry.created|date:"d/m/Y H:i" }}
+                {% if entry.created != entry.updated %}
+                (updated: {{ entry.updated|date:"d/m/Y H:i" }})
+                {% endif %}
+                </div>
+                {% if request.user == entry.author %}
+                (<a href="{% url 'entry-edit' entry.id%}">Edit</a>)
+                (<a href="{% url 'entry-delete' entry.id%}">Delete</a>)
+                {% endif %}
+                <a href="{% url 'entry-details' entry.id %}">
+                    <h2>{{ entry.title }}</h2>
+                    {{ entry.content|linebreaksbr|slice:"0:100" }}
+                </a>
+            </div>
+        {% endfor %}
+
+{% endblock content %}
