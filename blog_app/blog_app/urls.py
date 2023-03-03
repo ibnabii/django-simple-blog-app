@@ -11,6 +11,7 @@ urlpatterns = i18n_patterns(
         next_page='/'
         ), name='login'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
+    path(r'^i18n/', include('django.conf.urls.i18n')),
     # prefix_default_language=False
     # enabling line above enforces that english (LANGUAGE_CODE) is enabled. If not the URL i18n patterns fail,
     # so Django Middleware moves to next steps determining the languages and finally fetches the browser header

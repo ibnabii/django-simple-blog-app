@@ -1,4 +1,33 @@
 {%  load i18n %}
+
+<div class="languagebar">
+       <form action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ request.path }}" />
+
+        <select class="selectpicker" name="language" style="width: auto;" onchange="this.form.submit()">
+          {% get_current_language as LANGUAGE_CODE %}
+          {% get_available_languages as LANGUAGES %}
+          {% get_language_info_list for LANGUAGES as languages %}
+          {% for language in languages %}
+
+              <option
+                value="{{ language.code }}"
+                {% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}
+                data-content='<img src="/static/images/flags/{{ language.code }}.gif"></span>
+                <span style="display:inline-block; width:100px; padding-left: 10px; text-shadow:none">
+                  {{ language.name_local }}
+                  <!-- span style="color:#999;">&nbsp;[{{ language.code }}]</span -->
+                </span>'>
+                {{ language.code }}
+              </option>
+
+          {% endfor %}
+        </select>
+    </form>
+
+</div>
+
 <div class="topbar">
     <div><a href="{% url 'home' %}" class="homelink"><h1>Blog app</h1></a></div>
     {% if user.is_authenticated %}
