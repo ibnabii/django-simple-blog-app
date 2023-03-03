@@ -1,3 +1,4 @@
+{%  load i18n %}
 <div class="topbar">
     <div><a href="{% url 'home' %}" class="homelink"><h1>Blog app</h1></a></div>
     {% if user.is_authenticated %}
@@ -16,12 +17,25 @@
     {% endif %}
 
 </div>
-
+{#{% language 'pl' %}#}
 <div class="navbar">
-    <a href="{% url 'home' %}">Home</a>
-    <a href="{% url 'authors' %}">Browse Authors</a>
+    <a href="{% url 'home' %}">
+        {# Translators: Link to homepage #}
+        {% translate "Home" %}
+    </a>
+    <a href="{% url 'authors' %}">{% translate "Browse Authors" %}</a>
     {% if user.is_authenticated %}
-    <a href="{% url 'entry-owned' %}">My posts</a>
-    <a href="{% url 'entry-create' %}">Add blog post</a>
+    {# Translators: Page listing entries owned by logged in user #}
+    <a href="{% url 'entry-owned' %}">
+
+        {% translate "My posts" %}
+    </a>
+
+    <a href="{% url 'entry-create' %}">
+        {# Translators: link to a page, where user edits and submits new post #}
+        {% translate "Add blog post" %}
+    </a>
+
     {% endif %}
 </div>
+{#{% endlanguage %}#}
