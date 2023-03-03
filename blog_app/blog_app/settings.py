@@ -108,6 +108,17 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
+# line below is needed so that when:
+# - prefix_default_language=True
+# - AND header from the browser comes with unsupported language
+# the resulting redirect uncludes LANGUAGE_CODE
+
+LANGUAGES = [
+    ('pl', 'Polski'),
+    ('en', 'English'),
+    ('de', 'Germański'),
+]
+
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
