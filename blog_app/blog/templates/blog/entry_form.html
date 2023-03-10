@@ -1,11 +1,20 @@
 {% extends 'main.html' %}
 
 {% block content %}
+{%  load i18n %}
 
 <form method="post" action="">
   {% csrf_token %}
-  {{form.as_div}}
-  <button type="submit">Save</button>
+    <table>
+        {{ form.as_table }}
+    </table>
+
+    <button type="submit">
+          {# Translators: Save edited or added blog entry #}
+          {% translate "Save" %}
+        </a>
+      </button>
+
 </form>
 
 {% endblock %}
