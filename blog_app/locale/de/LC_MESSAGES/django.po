@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-03 16:49+0100\n"
+"POT-Creation-Date: 2023-03-10 14:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,20 +17,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\blog\forms.py:12
+msgid "Post title"
+msgstr ""
+
+#: .\blog\forms.py:13
+msgid "Post body"
+msgstr ""
+
+#. Translators: Save edited or added blog entry
+#: .\blog\templates\blog\entry_form.html:10
+msgid "Save"
+msgstr ""
+
 #. Translators: Link to homepage
-#: .\blog\templates\blog\head.html:24
+#: .\blog\templates\blog\head.html:54
 msgid "Home"
 msgstr "Hauptseite"
 
-#: .\blog\templates\blog\head.html:26
+#: .\blog\templates\blog\head.html:56
 msgid "Browse Authors"
 msgstr ""
 
-#: .\blog\templates\blog\head.html:31
+#: .\blog\templates\blog\head.html:61
 msgid "My posts"
 msgstr "Mein Kampf"
 
 #. Translators: link to a page, where user edits and submits new post
-#: .\blog\templates\blog\head.html:36
+#: .\blog\templates\blog\head.html:66
 msgid "Add blog post"
 msgstr ""
