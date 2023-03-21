@@ -5,6 +5,7 @@ from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
+    path('redirect/', include('hredirect.urls')),
     path('', include('blog.urls')),
     path('login/', LoginView.as_view(
         template_name='login.html',
