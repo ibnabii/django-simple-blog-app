@@ -29,7 +29,7 @@
 </div>
 
 <div class="topbar">
-    <div><a href="{% url 'home' %}" class="homelink"><h1>Blog app</h1></a></div>
+    <div><a href="{% url 'blog:home' %}" class="homelink"><h1>Blog app</h1></a></div>
     {% if user.is_authenticated %}
 
 
@@ -49,19 +49,19 @@
 
 {#{% language 'pl' %}#}
 <div class="navbar">
-    <a href="{% url 'home' %}">
+    <a href="{% url 'blog:home' %}">
         {# Translators: Link to homepage #}
         {% translate "Home" %}
     </a>
-    <a href="{% url 'authors' %}">{% translate "Browse Authors" %}</a>
+    <a href="{% url 'blog:authors' %}">{% translate "Browse Authors" %}</a>
     {% if user.is_authenticated %}
     {# Translators: Page listing entries owned by logged in user #}
-    <a href="{% url 'entry-owned' %}">
+    <a href="{% url 'blog:entry-owned' %}">
 
         {% translate "My posts" %}
     </a>
 
-    <a href="{% url 'entry-create' %}">
+    <a href="{% url 'blog:entry-create' %}">
         {# Translators: link to a page, where user edits and submits new post #}
         {% translate "Add blog post" %}
     </a>

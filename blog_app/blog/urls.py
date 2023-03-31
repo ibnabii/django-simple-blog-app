@@ -5,6 +5,7 @@ from django.views.generic import ListView, DetailView
 from .models import Entry
 from . import views
 
+app_name = 'blog'
 urlpatterns = [
     path('',
         ListView.as_view(

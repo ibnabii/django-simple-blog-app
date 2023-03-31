@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.shortcuts import reverse
 
 from .models import HashRedirect
 

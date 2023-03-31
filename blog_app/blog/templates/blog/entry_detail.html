@@ -7,10 +7,10 @@
         {% endif %}
         </div>
         {% if request.user == entry.author %}
-        (<a href="{% url 'entry-edit' entry.id%}">Edit</a>)
-        (<a href="{% url 'entry-delete' entry.id%}">Delete</a>)
+        (<a href="{% url 'blog:entry-edit' entry.id%}">Edit</a>)
+        (<a href="{% url 'blog:entry-delete' entry.id%}">Delete</a>)
         {% endif %}
-        <a href="{% url 'entry-details' entry.id %}">
+        <a href="{% url 'blog:entry-details' entry.id %}">
             <h2>{{ entry.title }}</h2>
             {{ entry.content|linebreaksbr }}
         </a>
