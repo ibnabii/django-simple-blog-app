@@ -1,7 +1,10 @@
+from re import search
 from secrets import token_urlsafe
 from uuid import uuid4
 
 from django.db import models
+from django.urls import reverse_lazy
+from django.http import request
 
 from . import settings
 
@@ -23,7 +26,7 @@ class HashRedirect(models.Model):
     last_access_at = models.DateTimeField(null=True, editable=False)
 
     def save(self, *args, **kwargs):
-        if self.secret == None:
+        if self.secret == None or self.secret == '':
             exists = True
             while exists:
                 new_secret = token_urlsafe(settings.DEFAULT_URL_LENGTH)
@@ -35,3 +38,6 @@ class HashRedirect(models.Model):
         if len(self.description):
             return self.description
         return self.url
+
+    def link(self):
+        return reverse_lazy('hredirect:first', kwargs={'secrethash': self.secret})

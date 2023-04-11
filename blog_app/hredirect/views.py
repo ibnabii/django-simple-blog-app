@@ -2,17 +2,19 @@ from json import loads
 from re import search
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, Http404
+from django.db.models import Q
+from django.http import Http404
 from django.shortcuts import redirect
-from django.urls import reverse
-from django.views.generic import RedirectView
 
 from .models import HashRedirect
 
 
 @login_required
-def redirect_for_logged_in_user(request, url, arguments):
+def redirect_for_logged_in_user(request, hredirect: HashRedirect):
+    if hredirect.is_one_time:
+        hredirect.is_active = False
+        hredirect.save()
+    url, arguments = get_url_arguments(hredirect)
     return redirect(url, **arguments)
 
 
@@ -20,13 +22,7 @@ def redirect_for_logged_in_user(request, url, arguments):
 def login404(request):
     raise Http404
 
-
-def hash_redirect(request, secrethash):
-    try:
-        hredirect = HashRedirect.objects.get(secret=secrethash)
-    except HashRedirect.DoesNotExist:
-        return login404(request)
-
+def get_url_arguments(hredirect):
     if hredirect.is_internal:
         arguments = loads(hredirect.internal_arguments.replace('\'', '\"'))
         url = hredirect.url
@@ -36,10 +32,18 @@ def hash_redirect(request, secrethash):
             url = hredirect.url
         else:
             url = 'https://' + hredirect.url
+    return url, arguments
 
-
+def hash_redirect(request, secrethash):
+    try:
+        hredirect = HashRedirect.objects.get(Q(secret=secrethash) & Q(is_active=True))
+    except HashRedirect.DoesNotExist:
+        return login404(request)
 
     if hredirect.require_login:
-        return redirect_for_logged_in_user(request, url, arguments)
+        return redirect_for_logged_in_user(request, hredirect)
     else:
-        return redirect(url, arguments)
+        if hredirect.is_one_time:
+            hredirect.is_active = False
+            hredirect.save()
+        return redirect(*get_url_arguments(hredirect))
