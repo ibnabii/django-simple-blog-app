@@ -3,8 +3,10 @@ from re import search
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.http import Http404
-from django.shortcuts import redirect
+from django.http import Http404, HttpResponse
+from django.shortcuts import redirect, reverse
+
+import qrcode
 
 from .models import HashRedirect
 
@@ -47,3 +49,26 @@ def hash_redirect(request, secrethash):
             hredirect.is_active = False
             hredirect.save()
         return redirect(*get_url_arguments(hredirect))
+
+def render_qr_code(request, secrethash):
+    # img = qrcode.make(
+    #     request.build_absolute_uri(
+    #         reverse('hredirect:first', kwargs={'secrethash': secrethash})
+    #     )
+    # )
+    import qrcode
+    qr = qrcode.QRCode(
+        version=None,
+        error_correction=qrcode.constants.ERROR_CORRECT_Q,
+        box_size=5,
+        border=4,
+    )
+    qr.add_data(
+        request.build_absolute_uri(reverse('hredirect:first', kwargs={'secrethash': secrethash}))
+    )
+    qr.make(fit=True)
+
+    img = qr.make_image(fill_color="black", back_color="white")
+    response = HttpResponse(content_type="image/png")
+    img.save(response, 'PNG')
+    return response
