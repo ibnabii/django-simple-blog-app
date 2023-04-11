@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import logging.config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -140,3 +140,37 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOCALE_PATHS = (BASE_DIR / 'locale/', )
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'base': {
+            'format': '{name} at {asctime} ({levelname}) :: {message}',
+            'style': '{'
+        }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'base'
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'formatter': 'base',
+            'level': 'WARNING',
+            'filename': 'logs/django-logs.txt'
+        },
+    },
+    'loggers': {
+       'hredirect': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG'
+        },
+    }
+}
+
+LOGGING_CONFIG = None
+logging.getLogger("requests").setLevel(logging.ERROR)
+logging.config.dictConfig(LOGGING)

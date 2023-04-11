@@ -1,5 +1,6 @@
 from json import loads
 from re import search
+from logging import getLogger
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -10,6 +11,7 @@ import qrcode
 
 from .models import HashRedirect
 
+logger = getLogger('hredirect')
 
 @login_required
 def redirect_for_logged_in_user(request, hredirect: HashRedirect):
@@ -37,10 +39,14 @@ def get_url_arguments(hredirect):
     return url, arguments
 
 def hash_redirect(request, secrethash):
+    logger.debug(f"Accessing hashredirect: {secrethash}")
     try:
         hredirect = HashRedirect.objects.get(Q(secret=secrethash) & Q(is_active=True))
     except HashRedirect.DoesNotExist:
+        logger.debug("Hash not found")
         return login404(request)
+    else:
+        logger.debug("Hash found")
 
     if hredirect.require_login:
         return redirect_for_logged_in_user(request, hredirect)
@@ -56,7 +62,6 @@ def render_qr_code(request, secrethash):
     #         reverse('hredirect:first', kwargs={'secrethash': secrethash})
     #     )
     # )
-    import qrcode
     qr = qrcode.QRCode(
         version=None,
         error_correction=qrcode.constants.ERROR_CORRECT_Q,
